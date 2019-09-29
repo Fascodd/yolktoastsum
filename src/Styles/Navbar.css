@@ -1,0 +1,13 @@
+
+.main-nav{
+    list-style: none;
+    display: flex;
+    margin:0;
+    padding:0;
+    display:flex;
+}
+.navHeader-li{
+    margin:0 20px;
+    cursor: pointer;
+    color:white;
+}
