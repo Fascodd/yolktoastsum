@@ -18,10 +18,12 @@
 }
 
 .central-container{
+  display:flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 70%;
 }
-
 .bottom-container{
   background: #addbf0;
   height:20%;
@@ -33,4 +35,12 @@
   justify-content: center;
   height:50%;
   width:100%;
+}
+.main-show{
+ 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width:50%;
+  height:100%;
 }
