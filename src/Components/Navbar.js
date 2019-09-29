@@ -4,7 +4,7 @@ class Navbar extends React.Component {
     constructor() {
         super();
         this.state = {
-            navHeader: [{ name: "item1", ID: 1 }, { name: "item2", ID: 2 }, { name: "item1", ID: 3 }]
+            navHeader: [{ name: "item1", ID: 1 }, { name: "item2", ID: 2 }, { name: "item3", ID: 3 }]
         }
     }
     render() {
