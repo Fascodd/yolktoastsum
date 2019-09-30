@@ -1,0 +1,8 @@
+.shape-list-item{
+    width:15%;
+list-style: none;
+margin:5px 0;
+}
+.shape-button{
+    cursor: pointer;
+}

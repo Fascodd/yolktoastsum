@@ -3,6 +3,7 @@ import './App.css';
 import Navbar from './Components/Navbar'
 import CenterShow from './Components/CenterShow'
 
+
 class App extends React.Component {
   render() {
     return (
@@ -14,7 +15,6 @@ class App extends React.Component {
         </div>
 
         <div className="central-container">
-          <div className="l-nav-bar"></div>
           <div className="main-show">
             <CenterShow/>
           </div>
@@ -22,7 +22,6 @@ class App extends React.Component {
 
         <div className="bottom-container">
           <div className="bottom-bar">
-            <p> Nothing Dynamic in this page (yet)</p>
           </div>
         </div>
       </div>
