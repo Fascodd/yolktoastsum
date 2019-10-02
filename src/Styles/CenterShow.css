@@ -53,3 +53,14 @@
     transform: skew(20deg);
     background: red;
   }
+.shapeHeader{
+  position: absolute;
+  z-index:9;
+  border: 1px solid #d3d3d3;
+}
+.shapeDiv{
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  color: #fff;
+}
