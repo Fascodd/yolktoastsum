@@ -28,8 +28,11 @@ class CenterShow extends React.Component {
                     </div>
                 </div>
                 <div className="CenterShow">
-                    <div className={this.state.displayShape}>
+                    <div className="shapeHeader">
+                        <div className={`${this.state.displayShape} shapeDiv` }>
                     </div>
+                    </div>
+
                 </div>
             </span>
         )
