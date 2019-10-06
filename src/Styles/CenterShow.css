@@ -59,7 +59,6 @@
   border: 1px solid #d3d3d3;
 }
 .shapeDiv{
-  padding: 10px;
   cursor: move;
   z-index: 10;
   color: #fff;
