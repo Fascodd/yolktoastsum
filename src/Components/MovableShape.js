@@ -7,9 +7,14 @@ export default class MovableShape extends React.Component {
             draggable: false,
             x: 0,
             y: 0,
+            ongoingX: 0,
+            ongoingY: 0,
             startX: 0,
-            startY: 0
+            startY: 0,
+            deltaX: 0,
+            deltaY: 0
         }
+
         this.moveShape = this.moveShape.bind(this);
         this.findDeltas = this.findDeltas.bind(this);
         this.noMove = this.noMove.bind(this);
@@ -21,25 +26,26 @@ export default class MovableShape extends React.Component {
     }
     findDeltas = () => {
         if (this.state.draggable) {
-            const deltaX = this.props.currentX - this.state.startX
-            const deltaY = this.props.currentY - this.state.startY
-            this.setState({ x: deltaX, y: deltaY })
+            this.setState((prevstate) => ({ deltaX: this.props.currentX - prevstate.startX, deltaY: this.props.currentY - prevstate.startY }))
+            this.setState((prevstate) => ({ ongoingX: prevstate.x + prevstate.deltaX, ongoingY: prevstate.y + prevstate.deltaY }))
         }
     };
     noMove = () => {
         this.setState({ draggable: false })
+        this.setState((prevstate) => ({ x: prevstate.x + prevstate.deltaX, y: prevstate.y + prevstate.deltaY }))
     }
     render() {
         const divStyle = {
-            marginTop: `${this.state.y}px`,
-            marginLeft: `${this.state.x}px`,
+            marginTop: `${this.state.ongoingY}px`,
+            marginLeft: `${this.state.ongoingX}px`,
         }
         return (
-            <div className="shapeHeader" style={divStyle} onMouseDown={this.moveShape}
-                ref={this.selector} onMouseMove={this.findDeltas} onMouseUp={this.noMove}>
-                <div className={`${this.props.class} shapeDiv`}>
+           
+                <div className={`${this.props.class} shapeDiv`} style={divStyle}
+                    onMouseDown={this.moveShape} onMouseMove={this.findDeltas} onMouseUp={this.noMove} onMouseOut={this.noMove}
+                    ref={this.selector} >
                 </div>
-            </div>
+           
         )
     }
 }

@@ -9,12 +9,11 @@ export default class CenterShow extends React.Component {
         this.state = {
             shapesList,
             displayShape: "square",
-            startX: 0,
-            startY: 0,
+            startX: "",
+            startY: "",
             CenterCoordX: 0,
             CenterCoordY: 0,
-            deltaX: 0,
-            deltaY: 0
+
         }
         this.AddShape = this.AddShape.bind(this);
         this.ReferenceCorridinates = this.ReferenceCorridinates.bind(this);
@@ -30,7 +29,7 @@ export default class CenterShow extends React.Component {
     }
 
     ReferenceCorridinates = (e) => {
-        this.setState({ CenterCoordX: e.clientX, CenterCoordY: e.clientY })
+        this.setState({ CenterCoordX: e.pageX, CenterCoordY: e.pageY })
     }
 
     render() {
