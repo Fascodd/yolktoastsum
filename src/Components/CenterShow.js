@@ -22,9 +22,7 @@ export default class CenterShow extends React.Component {
         this.setState({ displayShape: param })
     }
 
-
-
-    ReferenceCorridinates = (e) => {
+    ReferenceCorridinates = e => {
         this.setState({ CenterCoordX: e.pageX, CenterCoordY: e.pageY })
     }
 
@@ -46,7 +44,7 @@ export default class CenterShow extends React.Component {
                 </div>
                 <div className="CenterShow" onMouseMove={this.ReferenceCorridinates}>
 
-                    <MovableShape class={this.state.displayShape} onMouseDown={() => this.ReferenceCorridinates}
+                    <MovableShape class={this.state.displayShape}
                         currentX={this.state.CenterCoordX} currentY={this.state.CenterCoordY}
                         startX={this.state.startX} startY={this.state.startY} />
 

@@ -5,8 +5,8 @@ export default class MovableShape extends React.Component {
         super(props);
         this.state = {
             draggable: false,
-            x: 0,
-            y: 0,
+            offsetX: 0,
+            offsetY: 0,
             ongoingX: 0,
             ongoingY: 0,
             startX: 0,
@@ -14,38 +14,53 @@ export default class MovableShape extends React.Component {
             deltaX: 0,
             deltaY: 0
         }
-
         this.moveShape = this.moveShape.bind(this);
         this.findDeltas = this.findDeltas.bind(this);
         this.noMove = this.noMove.bind(this);
     }
+
     moveShape = () => {
-        this.props.onMouseDown();
-        this.setState({ draggable: true })
-        this.setState({ startX: this.props.currentX, startY: this.props.currentY })
+        this.setState({
+            draggable: true,
+            startX: this.props.currentX,
+            startY: this.props.currentY,
+            deltaX: 0,
+            deltaY: 0
+        })
     }
+
     findDeltas = () => {
         if (this.state.draggable) {
-            this.setState((prevstate) => ({ deltaX: this.props.currentX - prevstate.startX, deltaY: this.props.currentY - prevstate.startY }))
-            this.setState((prevstate) => ({ ongoingX: prevstate.x + prevstate.deltaX, ongoingY: prevstate.y + prevstate.deltaY }))
+
+            this.setState({
+                deltaX: this.props.currentX - this.state.startX,
+                deltaY: this.props.currentY - this.state.startY,
+                ongoingX: this.state.offsetX + this.state.deltaX,
+                ongoingY: this.state.offsetY + this.state.deltaY
+            });
+
         }
     };
     noMove = () => {
-        this.setState({ draggable: false })
-        this.setState((prevstate) => ({ x: prevstate.x + prevstate.deltaX, y: prevstate.y + prevstate.deltaY }))
+        this.setState((prevstate) => ({
+            draggable: false,
+            offsetX: prevstate.ongoingX,
+            offsetY: prevstate.ongoingY
+        }))
     }
     render() {
         const divStyle = {
-            marginTop: `${this.state.ongoingY}px`,
             marginLeft: `${this.state.ongoingX}px`,
+            marginTop: `${this.state.ongoingY}px`
         }
         return (
-           
-                <div className={`${this.props.class} shapeDiv`} style={divStyle}
-                    onMouseDown={this.moveShape} onMouseMove={this.findDeltas} onMouseUp={this.noMove} onMouseOut={this.noMove}
-                    ref={this.selector} >
-                </div>
-           
+
+            <div className={`${this.props.class} shapeDiv`} style={divStyle}
+                onMouseDown={this.moveShape} onMouseMove={this.findDeltas}
+                onMouseUp={this.noMove} onMouseLeave={this.noMove}
+                ref={this.selector} draggable>
+            </div>
+
         )
     }
 }
