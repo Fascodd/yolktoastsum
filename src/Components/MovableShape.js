@@ -90,7 +90,7 @@ export default class MovableShape extends React.Component {
             <div className={`${this.props.class} shapeDiv`}
                 style={divStyle}
                 onMouseDown={this.onShapeClick}
-                draggable="true" ref={this.shapePos}>
+                ref={this.shapePos}>
             </div>
 
         )
