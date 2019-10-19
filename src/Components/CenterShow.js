@@ -29,7 +29,6 @@ export default class CenterShow extends React.Component {
         this.setState({ prevX: e.clientX, prevY: e.clientY })
     }
   
- 
     componentDidMount() {
         this.setState({ containerBound: this.shapeContainterPos.current.getBoundingClientRect() })
     }
@@ -50,7 +49,7 @@ export default class CenterShow extends React.Component {
                         </ul>
                     </div>
                 </div>
-                <div className="CenterShow" ref={this.shapeContainterPos} >
+                <div id="CenterShow" ref={this.shapeContainterPos} >
                     <div >
                             <MovableShape class={this.state.displayShape}
                     prevx={this.state.prevX} prevy={this.state.prevY} 
