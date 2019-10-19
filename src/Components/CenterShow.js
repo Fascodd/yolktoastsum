@@ -2,31 +2,39 @@ import React from "react"
 import shapesList from "../Shapes/ShapesList"
 import "../Styles/CenterShow.css"
 import "../Styles/ShapesNav.css"
-import MovableShape from "./MovableShape"
+import MovableShape from "./MovableShape";
 export default class CenterShow extends React.Component {
     constructor() {
         super();
+        this.shapeContainterPos = React.createRef();
         this.state = {
             shapesList,
             displayShape: "square",
-            startX: "",
-            startY: "",
-            CenterCoordX: 0,
-            CenterCoordY: 0,
-
+            prevX: 0,
+            prevY: 0,
+            containerBound: {},
+            shapeStyle: {
+                marginTop: "0",
+                marginLeft: "0"
+            },
         }
         this.AddShape = this.AddShape.bind(this);
-        this.ReferenceCorridinates = this.ReferenceCorridinates.bind(this);
+        this.prevMousePosition = this.prevMousePosition.bind(this);
     }
     AddShape = param => {
         this.setState({ displayShape: param })
     }
 
-    ReferenceCorridinates = e => {
-        this.setState({ CenterCoordX: e.pageX, CenterCoordY: e.pageY })
+    prevMousePosition = e => {
+        this.setState({ prevX: e.clientX, prevY: e.clientY })
     }
-
+  
+ 
+    componentDidMount() {
+        this.setState({ containerBound: this.shapeContainterPos.current.getBoundingClientRect() })
+    }
     render() {
+        
         return (
             <span className="center-container">
                 <div>
@@ -42,13 +50,13 @@ export default class CenterShow extends React.Component {
                         </ul>
                     </div>
                 </div>
-                <div className="CenterShow" onMouseMove={this.ReferenceCorridinates}>
-
-                    <MovableShape class={this.state.displayShape}
-                        currentX={this.state.CenterCoordX} currentY={this.state.CenterCoordY}
-                        startX={this.state.startX} startY={this.state.startY} />
-
-
+                <div className="CenterShow" ref={this.shapeContainterPos} >
+                    <div >
+                            <MovableShape class={this.state.displayShape}
+                    prevx={this.state.prevX} prevy={this.state.prevY} 
+                    containerbound = {this.state.containerBound} 
+                        style={this.state.shapeStyle}/>
+                    </div>
                 </div>
             </span>
         )

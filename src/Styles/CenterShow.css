@@ -1,7 +1,7 @@
 .CenterShow{
     width: 40%;
     height:80%;
-    border:dotted 5px black;
+    background: #92d190;
 
 }
 .center-container{
@@ -10,7 +10,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  padding:0 100px;
+
 }
 .square {
     width: 100px;

@@ -1,64 +1,70 @@
 import React from "react"
-
 export default class MovableShape extends React.Component {
     constructor(props) {
         super(props);
+        this.shapePos = React.createRef();
         this.state = {
-            draggable: false,
             offsetX: 0,
             offsetY: 0,
-            ongoingX: 0,
-            ongoingY: 0,
-            startX: 0,
-            startY: 0,
-            deltaX: 0,
-            deltaY: 0
+            prevX: 0,
+            prevY: 0,
+            prevShapeBound:{},
+            initialCount:0,
         }
-        this.moveShape = this.moveShape.bind(this);
-        this.findDeltas = this.findDeltas.bind(this);
-        this.noMove = this.noMove.bind(this);
+        this.onShapeClick = this.onShapeClick.bind(this);
+        this.ForShapeMove = this.ForShapeMove.bind(this);
+        this.stopShapeMove = this.stopShapeMove.bind(this);
+
     }
 
-    moveShape = () => {
+    onShapeClick = (e) => {
         this.setState({
-            draggable: true,
-            startX: this.props.currentX,
-            startY: this.props.currentY,
-            deltaX: 0,
-            deltaY: 0
+            prevX: e.clientX,
+            prevY: e.clientY,
+        });
+        window.addEventListener("mousemove",this.ForShapeMove);
+        window.addEventListener("mouseup",this.stopShapeMove)
+        /*Conditional used to set the intial position of shape for reference. 
+        setState in componentDidMount gave a different position and created an offset of -9px
+        Assumed that this offset may not be conistant across screen size*/
+        if(this.state.initialCount <1){
+            this.setState(prevstate=>({
+                prevShapeBound:this.shapePos.current.getBoundingClientRect(),
+                initialCount:prevstate.initialCount+1}))
+        }
+     console.log(this.state.initialCount)
+    }
+    ForShapeMove(e){
+       
+        let currentShapeBound = this.shapePos.current.getBoundingClientRect();
+        let deltaX = e.clientX - this.state.prevX;
+        let deltaY = e.clientY - this.state.prevY;
+        let shapeBoundLeftDelta = currentShapeBound.left -this.state.prevShapeBound.left;
+        let shapeBoundTopDelta = currentShapeBound.top - this.state.prevShapeBound.top
+        this.setState({
+            offsetX: shapeBoundLeftDelta  +deltaX,
+            offsetY:shapeBoundTopDelta +deltaY,
+            prevX: e.clientX,
+            prevY:e.clientY,
         })
     }
-
-    findDeltas = () => {
-        if (this.state.draggable) {
-
-            this.setState({
-                deltaX: this.props.currentX - this.state.startX,
-                deltaY: this.props.currentY - this.state.startY,
-                ongoingX: this.state.offsetX + this.state.deltaX,
-                ongoingY: this.state.offsetY + this.state.deltaY
-            });
-
-        }
-    };
-    noMove = () => {
-        this.setState((prevstate) => ({
-            draggable: false,
-            offsetX: prevstate.ongoingX,
-            offsetY: prevstate.ongoingY
-        }))
+    stopShapeMove = () => {
+        window.removeEventListener("mousemove",this.ForShapeMove);
+        window.removeEventListener("mouseup",this.stopShapeMove)
     }
+  
     render() {
+      
         const divStyle = {
-            marginLeft: `${this.state.ongoingX}px`,
-            marginTop: `${this.state.ongoingY}px`
+            marginLeft: `${this.state.offsetX}px`,
+            marginTop: `${this.state.offsetY}px`
         }
         return (
 
-            <div className={`${this.props.class} shapeDiv`} style={divStyle}
-                onMouseDown={this.moveShape} onMouseMove={this.findDeltas}
-                onMouseUp={this.noMove} onMouseLeave={this.noMove}
-                ref={this.selector} draggable>
+            <div className={`${this.props.class} shapeDiv`} 
+            style={divStyle}
+                onMouseDown={this.onShapeClick} 
+                draggable="true" ref={this.shapePos}>
             </div>
 
         )

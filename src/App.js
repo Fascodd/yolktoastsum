@@ -6,6 +6,7 @@ import CenterShow from './Components/CenterShow'
 
 class App extends React.Component {
   render() {
+    
     return (
       <div className="App">
         <div className="top-container">
