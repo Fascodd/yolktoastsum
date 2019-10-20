@@ -54,7 +54,7 @@ export default class CenterShow extends React.Component {
                             <MovableShape class={this.state.displayShape}
                     prevx={this.state.prevX} prevy={this.state.prevY} 
                     containerbound = {this.state.containerBound} 
-                        style={this.state.shapeStyle}/>
+                        style={this.state.shapeStyle} containerDiv={this.shapeContainterPos}/>
                     </div>
                 </div>
             </span>
